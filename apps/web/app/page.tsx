@@ -1,16 +1,63 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 const features = [
   'Compatibilidade por idioma, destino e orçamento',
   'Recomendações personalizadas por interesses',
   'Conexão rápida entre turistas e guias locais'
 ];
 
-const guideCards = [
-  { name: 'Luan Costa', city: 'Rio de Janeiro', specialties: ['Histórico', 'Cultural'], score: 96 },
-  { name: 'Sofia Almeida', city: 'Salvador', specialties: ['Gastronômico', 'Natureza'], score: 92 },
-  { name: 'Mateus Ribeiro', city: 'Florianópolis', specialties: ['Natureza', 'Aventura'], score: 89 }
+type MatchGuide = {
+  guideId: string;
+  score: number;
+  reasons: string[];
+};
+
+const defaultGuides: MatchGuide[] = [
+  { guideId: 'guide-1', score: 96, reasons: ['Destino alinhado', 'Idioma compatível'] },
+  { guideId: 'guide-2', score: 92, reasons: ['Interesse em comum', 'Preço compatível'] },
+  { guideId: 'guide-3', score: 89, reasons: ['Boa avaliação', 'Alta disponibilidade'] }
 ];
 
+const guideNames: Record<string, string> = {
+  'guide-1': 'Luan Costa',
+  'guide-2': 'Sofia Almeida',
+  'guide-3': 'Mateus Ribeiro'
+};
+
+const guideCities: Record<string, string> = {
+  'guide-1': 'Rio de Janeiro',
+  'guide-2': 'Salvador',
+  'guide-3': 'Florianópolis'
+};
+
+const guideSpecialties: Record<string, string[]> = {
+  'guide-1': ['Histórico', 'Cultural'],
+  'guide-2': ['Gastronômico', 'Natureza'],
+  'guide-3': ['Natureza', 'Aventura']
+};
+
 export default function HomePage() {
+  const [guides, setGuides] = useState(defaultGuides);
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/matches?destination=Rio%20de%20Janeiro&budget=300&interests=historical&languages=pt-BR');
+        if (!response.ok) throw new Error('Failed to fetch matches');
+        const data = (await response.json()) as { matches?: MatchGuide[] };
+        if (Array.isArray(data.matches) && data.matches.length > 0) {
+          setGuides(data.matches);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMatches();
+  }, []);
+
   return (
     <main style={{ fontFamily: 'Arial, sans-serif', maxWidth: 1200, margin: '0 auto', padding: '48px 24px 80px', color: '#122033', background: '#f8fafc' }}>
       <section style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 32, alignItems: 'center' }}>
@@ -49,22 +96,27 @@ export default function HomePage() {
       <section style={{ marginTop: 56 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h2 style={{ margin: 0 }}>Sugestões para você</h2>
-          <span style={{ color: '#475569', fontWeight: 600 }}>3 guias em alta</span>
+          <span style={{ color: '#475569', fontWeight: 600 }}>{guides.length} guias em alta</span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {guideCards.map((guide) => (
-            <article key={guide.name} style={{ background: '#fff', borderRadius: 20, padding: 20, boxShadow: '0 20px 35px rgba(15, 23, 42, 0.06)' }}>
+          {guides.map((guide) => (
+            <article key={guide.guideId} style={{ background: '#fff', borderRadius: 20, padding: 20, boxShadow: '0 20px 35px rgba(15, 23, 42, 0.06)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <h3 style={{ margin: 0 }}>{guide.name}</h3>
+                <h3 style={{ margin: 0 }}>{guideNames[guide.guideId] ?? guide.guideId}</h3>
                 <span style={{ background: '#dbeafe', color: '#1d4ed8', borderRadius: 999, padding: '6px 10px', fontWeight: 700 }}>{guide.score}%</span>
               </div>
-              <p style={{ margin: '6px 0', color: '#334155' }}>{guide.city}</p>
+              <p style={{ margin: '6px 0', color: '#334155' }}>{guideCities[guide.guideId] ?? 'Destino'}</p>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
-                {guide.specialties.map((specialty) => (
+                {(guideSpecialties[guide.guideId] ?? ['Especialidade']).map((specialty) => (
                   <span key={specialty} style={{ background: '#f1f5f9', color: '#0f172a', borderRadius: 999, padding: '6px 10px', fontSize: 12, fontWeight: 700 }}>
                     {specialty}
                   </span>
+                ))}
+              </div>
+              <div style={{ marginTop: 18 }}>
+                {guide.reasons.map((reason) => (
+                  <p key={reason} style={{ margin: '4px 0', color: '#64748b', fontSize: 13 }}>{reason}</p>
                 ))}
               </div>
             </article>
