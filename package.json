@@ -1,0 +1,16 @@
+{
+  "name": "tourmatch",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:web": "npm run dev --workspace apps/web",
+    "dev:mobile": "npm run start --workspace apps/mobile",
+    "build": "npm run build --workspace packages/shared && npm run build --workspace apps/api && npm run build --workspace apps/web",
+    "lint": "npm run lint --workspace packages/shared && npm run lint --workspace apps/api && npm run lint --workspace apps/web"
+  }
+}
