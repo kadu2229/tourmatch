@@ -1,0 +1,92 @@
+.download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 64px);
+  padding: 4rem 2rem;
+  scroll-margin-top: 80px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 165, 0, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(122, 168, 243, 0.25), transparent 45%),
+    #fff;
+  font-family: var(--font-inter), "Inter", sans-serif;
+}
+
+.content {
+  max-width: 900px;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.highlight {
+  background: linear-gradient(to right, orange, #7aa8f3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  max-width: 620px;
+  margin: 1.5rem auto 0;
+  color: #4b5563;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: 0.9rem 2.2rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primaryButton {
+  background: linear-gradient(to right, orange, #7aa8f3) border-box;
+  color: #fff;
+}
+
+.secondaryButton {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(to right, orange, #7aa8f3) border-box;
+  color: #e8890c;
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(255, 165, 0, 0.3);
+}
+
+.primaryButton:active,
+.secondaryButton:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+@media (max-width: 520px) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
