@@ -1,7 +1,7 @@
 .sobre {
   display: flex;
   justify-content: center;
-  padding: 5rem 2rem;
+  padding: 1rem 2rem;
   scroll-margin-top: 80px;
   background:
     linear-gradient(to bottom, #f9fafb 100% 55%, #f9fafb 100%),
