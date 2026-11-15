@@ -39,7 +39,7 @@ export default function Header() {
           <ul className={styles.navList}>
             <li><Link href="/#inicio" onClick={close}>Início</Link></li>
             <li><Link href="/#sobre" onClick={close}>Sobre</Link></li>
-            <li><Link href="/#contato" onClick={close}>Contato</Link></li>
+            <li><Link href="/#download" onClick={close}>Download</Link></li>
             <li className={styles.mobileOnly}>
               <Link href="/login" onClick={close}>Entrar</Link>
             </li>
