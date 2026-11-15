@@ -3,7 +3,10 @@
   justify-content: center;
   padding: 5rem 2rem;
   scroll-margin-top: 80px;
-  background: #f9fafb;
+    background:
+    radial-gradient(circle at 15% 20%, rgba(255, 165, 0, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(122, 168, 243, 0.589), transparent 45%),
+    #fff;
   font-family: var(--font-inter), "Inter", sans-serif;
 }
 
