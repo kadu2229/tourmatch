@@ -5,12 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../public/img/Logo.png";
 import styles from "./Header.module.css";
+import { useAuthModal } from "@/components/AuthModal/AuthModal";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
   const close = () => setOpen(false);
+  const { openLogin } = useAuthModal();
+  const abrirLogin = () => {
+    close();
+    openLogin();
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -41,15 +47,17 @@ export default function Header() {
             <li><Link href="/#sobre" onClick={close}>Sobre</Link></li>
             <li><Link href="/#download" onClick={close}>Download</Link></li>
             <li className={styles.mobileOnly}>
-              <Link href="/login" onClick={close}>Entrar</Link>
+              <button type="button" className={styles.mobileLogin} onClick={abrirLogin}>
+                Entrar
+              </button>
             </li>
           </ul>
         </nav>
 
         <div className={styles.actions}>
-          <Link className={styles.loginLink} href="/login" onClick={close}>
+          <button type="button" className={styles.loginLink} onClick={abrirLogin}>
             Entrar
-          </Link>
+          </button>
           <button
             type="button"
             className={`${styles.menuButton} ${open ? styles.menuButtonOpen : ""}`}

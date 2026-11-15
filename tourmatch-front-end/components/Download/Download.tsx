@@ -1,7 +1,11 @@
-import Link from "next/link";
+"use client";
+
+import { useAuthModal } from "@/components/AuthModal/AuthModal";
 import styles from "./Download.module.css";
 
 export default function Download() {
+  const { openLogin } = useAuthModal();
+
   return (
     <section id="inicio" className={styles.download}>
       <div className={styles.content}>
@@ -15,9 +19,9 @@ export default function Download() {
           <a href="#" className={styles.primaryButton}>
             Baixar versão mobile
           </a>
-          <Link href="/cadastro" className={styles.secondaryButton}>
+          <button type="button" className={styles.secondaryButton} onClick={openLogin}>
             Criar conta
-          </Link>
+          </button>
         </div>
       </div>
     </section>

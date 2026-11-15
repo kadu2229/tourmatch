@@ -58,6 +58,8 @@
   font-weight: 600;
   text-decoration: none;
   transition: transform 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .primaryButton {
