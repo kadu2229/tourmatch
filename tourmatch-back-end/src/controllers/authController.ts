@@ -44,7 +44,7 @@ export async function register(req: Request, res: Response) {
 
   let usuario: PublicUser;
   try {
-    usuario = await userModel.create(dados.email, hash);
+    usuario = await userModel.create(dados.email, hash, dados.tipo);
   } catch (erro) {
     if (violacaoDeUnicidade(erro)) {
       res.status(409).json({ erro: "E-mail já cadastrado" });
@@ -70,7 +70,12 @@ export async function login(req: Request, res: Response) {
 
   res.json({
     token: gerarToken(usuario.id),
-    usuario: { id: usuario.id, email: usuario.email, created_at: usuario.created_at },
+    usuario: {
+      id: usuario.id,
+      email: usuario.email,
+      tipo: usuario.tipo,
+      created_at: usuario.created_at,
+    },
   });
 }
 

@@ -1,5 +1,4 @@
-import Sobre from "@/components/About/About";
-import Download from "@/components/Download/Download";
+import Hero from "@/pages/Hero"
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 
@@ -7,8 +6,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <Download />
-      <Sobre />
+      <Hero />
       <Footer />
     </div>
   );

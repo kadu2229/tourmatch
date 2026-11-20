@@ -12,10 +12,16 @@ export default function Header() {
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
   const close = () => setOpen(false);
-  const { openLogin } = useAuthModal();
+  const { openLogin, usuario, carregandoSessao, logout } = useAuthModal();
+
   const abrirLogin = () => {
     close();
     openLogin();
+  };
+
+  const sair = () => {
+    close();
+    logout();
   };
 
   useEffect(() => {
@@ -44,20 +50,46 @@ export default function Header() {
         <nav className={`${styles.nav} ${open ? styles.navOpen : ""}`}>
           <ul className={styles.navList}>
             <li><Link href="/#inicio" onClick={close}>Início</Link></li>
-            <li><Link href="/#sobre" onClick={close}>Sobre</Link></li>
-            <li><Link href="/#download" onClick={close}>Download</Link></li>
-            <li className={styles.mobileOnly}>
-              <button type="button" className={styles.mobileLogin} onClick={abrirLogin}>
-                Entrar
-              </button>
-            </li>
+            <li><Link href="/#about" onClick={close}>Sobre</Link></li>
+            <li><Link href="/#inicio" onClick={close}>Download</Link></li>
+            {!carregandoSessao && usuario && (
+              <>
+                <li className={styles.mobileOnly}>
+                  <span className={styles.mobileUser}>{usuario.email}</span>
+                </li>
+                <li className={styles.mobileOnly}>
+                  <button type="button" className={styles.mobileLogin} onClick={sair}>
+                    Sair
+                  </button>
+                </li>
+              </>
+            )}
+            {!carregandoSessao && !usuario && (
+              <li className={styles.mobileOnly}>
+                <button type="button" className={styles.mobileLogin} onClick={abrirLogin}>
+                  Entrar
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
 
         <div className={styles.actions}>
-          <button type="button" className={styles.loginLink} onClick={abrirLogin}>
-            Entrar
-          </button>
+          {!carregandoSessao && usuario && (
+            <>
+              <span className={styles.userEmail} title={usuario.email}>
+                {usuario.email}
+              </span>
+              <button type="button" className={styles.loginLink} onClick={sair}>
+                Sair
+              </button>
+            </>
+          )}
+          {!carregandoSessao && !usuario && (
+            <button type="button" className={styles.loginLink} onClick={abrirLogin}>
+              Entrar
+            </button>
+          )}
           <button
             type="button"
             className={`${styles.menuButton} ${open ? styles.menuButtonOpen : ""}`}

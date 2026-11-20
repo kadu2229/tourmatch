@@ -12,6 +12,7 @@ export const registerSchema = z.object({
     .string({ error: "Informe a senha" })
     .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
     .max(72, { error: "A senha deve ter no máximo 72 caracteres" }),
+  tipo: z.enum(["turista", "guia"], { error: "Escolha se você é turista ou guia" }),
 });
 
 export const loginSchema = z.object({

@@ -1,6 +1,7 @@
-import { pool, testConnection } from "./config/db";
+import { pool } from "./config/db";
 
-testConnection()
-  .then(() => console.log("Conectado ao banco"))
-  .catch((erro) => console.error("Falha ao conectar:", erro.message))
+pool
+  .query("SELECT to_regclass('public.users') AS tabela, current_database() AS banco")
+  .then(({ rows }) => console.log(rows[0]))
+  .catch((erro) => console.error("Falha:", erro.message))
   .finally(() => pool.end());
